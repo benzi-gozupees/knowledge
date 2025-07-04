@@ -1,6 +1,8 @@
-import { Controller, Post, Get, Body } from '@nestjs/common';
+import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common';
 import { KnowledgeService } from './knowledge.service';
+import { ApiKeyGuard } from '../common/guards/api-key.guard';
 
+@UseGuards(ApiKeyGuard)
 @Controller('knowledge')
 export class KnowledgeController {
   constructor(private readonly knowledgeService: KnowledgeService) {}
