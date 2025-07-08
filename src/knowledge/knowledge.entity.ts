@@ -17,6 +17,9 @@ export class Knowledge {
   @Column({ nullable: true })
   favicon: string;
 
+  @Column({ nullable: true })
+  category: string;
+
   @Column()
   createdBy: string;
 
