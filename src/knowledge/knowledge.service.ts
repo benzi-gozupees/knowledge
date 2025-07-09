@@ -35,12 +35,12 @@ export class KnowledgeService {
   
     const page = await browser.newPage();
   
-    while (toVisit.length > 0 && visited.size < 10) {
+    while (toVisit.length > 0 && visited.size < 5) {
       const currentUrl = toVisit.shift();
       if (!currentUrl || visited.has(currentUrl)) continue;
   
       try {
-        await page.goto(currentUrl, { waitUntil: 'domcontentloaded', timeout: 100000 });
+        await page.goto(currentUrl, { waitUntil: 'load', timeout: 100000 });
         visited.add(currentUrl);
   
         const html = await page.content();
