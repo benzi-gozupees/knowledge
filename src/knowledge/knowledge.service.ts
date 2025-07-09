@@ -53,7 +53,7 @@ export class KnowledgeService {
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
         );
         
-        await page.goto(currentUrl, { waitUntil: 'domcontentloaded', timeout: 4000 });
+        await page.goto(currentUrl, { waitUntil: 'networkidle2', timeout: 0 });
         console.log(`Loaded: ${currentUrl}`);
         visited.add(currentUrl);
   
