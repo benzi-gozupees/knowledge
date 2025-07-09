@@ -15,7 +15,7 @@ export class KnowledgeService {
 
   async scrapeAndSave(data: { website_url: string; business_name: string; business_type: string }, userId: string): Promise<any> {
     const { website_url, business_name, business_type } = data;
-  
+    console.log(`Starting scrape for: ${website_url}`);
     const puppeteerExtra = await import('puppeteer-extra');
     const StealthPlugin = require('puppeteer-extra-plugin-stealth');
     
@@ -41,13 +41,15 @@ export class KnowledgeService {
     const scrapedPages: { url: string; html: string; title: string; text: string }[] = [];
   
     const page = await browser.newPage();
-  
+    console.log(`Browser launched. Starting crawl loop...`);
     while (toVisit.length > 0 && visited.size < 5) {
       const currentUrl = toVisit.shift();
       if (!currentUrl || visited.has(currentUrl)) continue;
   
       try {
+        console.log(`Visiting: ${currentUrl}`);
         await page.goto(currentUrl, { waitUntil: 'load', timeout: 100000 });
+        console.log(`Loaded: ${currentUrl}`);
         visited.add(currentUrl);
   
         const html = await page.content();
@@ -67,7 +69,7 @@ export class KnowledgeService {
             .filter((href): href is string => !!href && !href.startsWith('javascript:'))
             .map(href => new URL(href, window.location.href).href)
         );
-  
+        console.log(`Found ${links.length} links on ${currentUrl}`);
         for (const link of links) {
           try {
             const parsed = new URL(link);
