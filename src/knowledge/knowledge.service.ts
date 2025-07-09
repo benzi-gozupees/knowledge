@@ -31,7 +31,8 @@ export class KnowledgeService {
         '--disable-dev-shm-usage',
         '--disable-accelerated-2d-canvas',
         '--no-zygote',
-        '--disable-gpu'
+        '--disable-gpu',
+        '--disable-blink-features=AutomationControlled'
       ]
     });
     
@@ -48,6 +49,10 @@ export class KnowledgeService {
   
       try {
         console.log(`Visiting: ${currentUrl}`);
+        await page.setUserAgent(
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        );
+        
         await page.goto(currentUrl, { waitUntil: 'load', timeout: 100000 });
         console.log(`Loaded: ${currentUrl}`);
         visited.add(currentUrl);
