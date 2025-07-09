@@ -109,10 +109,11 @@ export class KnowledgeController {
   @Post('/scrape/:userId')
   async scrapeWebsite(
     @Param('userId') userId: string,
-    @Body('url') url: string
+    @Body() body: { website_url: string; business_name: string; business_type: string }
   ) {
-    return this.knowledgeService.scrapeAndSave(url, userId);
+    return this.knowledgeService.scrapeAndSave(body, userId);
   }
+  
 
   @Post('/:userId')
   async createKnowledge(
