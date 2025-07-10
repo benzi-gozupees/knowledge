@@ -13,8 +13,8 @@ export class KnowledgeService {
 
   
 
-  async scrapeAndSave(data: { website_url: string; business_name: string; business_type: string }, userId: string): Promise<any> {
-    const { website_url, business_name, business_type } = data;
+  async scrapeAndSave(data: { website_url: string; business_name?: string; business_type?: string }): Promise<any> {
+    const { website_url, business_name = '', business_type = '' } = data;
     console.log(`Starting scrape for: ${website_url}`);
     const puppeteerExtra = await import('puppeteer-extra');
     const StealthPlugin = require('puppeteer-extra-plugin-stealth');
@@ -134,8 +134,7 @@ export class KnowledgeService {
       existing.title = `${business_name} Overview`;
       existing.content = summaryText;
       existing.favicon = '';
-      existing.createdBy = userId;
-      existing.orgId = 'external';
+      existing.orgId = '';
       if (!existing.category) existing.category = 'Business Overview';
       knowledge = existing;
     } else {
@@ -145,7 +144,7 @@ export class KnowledgeService {
         source: website_url,
         favicon: '',
         category: 'Business Overview',
-        createdBy: userId,
+        createdBy: '',
         orgId: 'external',
       } as Partial<Knowledge>);
     }

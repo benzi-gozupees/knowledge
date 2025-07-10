@@ -106,10 +106,10 @@ export class KnowledgeController {
     }
   }
 
-  @Post('scrape/:userId')
-  async scrape(@Body() data, @Param('userId') userId: string) {
-    console.log(`[Controller] Scrape called for ${data.website_url} by user ${userId}`);
-    return this.knowledgeService.scrapeAndSave(data, userId);
+  @Post('scrape')
+  async scrape(@Body() data) {
+    console.log(`[Controller] Scrape called for ${data.website_url}`);
+    return this.knowledgeService.scrapeAndSave(data);
   }
   
   
