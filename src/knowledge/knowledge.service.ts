@@ -150,12 +150,13 @@ export class KnowledgeService {
     }
   
     await this.knowledgeRepository.save(knowledge);
-  
+    const FileId = Math.random().toString(36).substring(2, 10);
     return {
       status: 'success',
       mandatoryFields,
       pagesProcessed: scrapedPages.length,
       scrapedPages,
+      fileId: FileId,
     };
   }
   
